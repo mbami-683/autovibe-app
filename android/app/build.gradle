@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     namespace = "com.autovibe.app"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         applicationId "com.autovibe.app"
         minSdkVersion rootProject.ext.minSdkVersion
