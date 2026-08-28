@@ -1,0 +1,13 @@
+{
+  "background_color": "#0f172a",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "AutoVibe",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "AutoVibe",
+  "start_url": "/",
+  "theme_color": "hsl(221, 83%, 53%)",
+  "id": "/autovibe-app/",
+  "description": "Plateforme d'importation et de découverte de véhicules"
+}
