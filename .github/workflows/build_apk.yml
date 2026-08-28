@@ -28,9 +28,13 @@ jobs:
           npm install
           npm run build
 
-      - name: Add Android Platform Fresh
+      - name: Add Android Platform Fresh & Configure Versions
         run: |
           npx cap add android || true
+          sed -i "s/minSdkVersion = .*/minSdkVersion = 24/" android/variables.gradle || true
+          sed -i "s/compileSdkVersion = .*/compileSdkVersion = 34/" android/variables.gradle || true
+          sed -i "s/targetSdkVersion = .*/targetSdkVersion = 34/" android/variables.gradle || true
+          sed -i "s/androidxCoreVersion = .*/androidxCoreVersion = '1.12.0'/" android/variables.gradle || true
           npx cap sync android
 
       - name: Build Debug APK
