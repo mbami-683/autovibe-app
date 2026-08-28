@@ -1,0 +1,399 @@
+cd ~
+nano index.html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoVibe - Pro Ultra</title>
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23050508'/%3E%3Cpath d='M 30 75 L 50 25 L 70 75 M 39 55 L 61 55' stroke='%2300d4ff' stroke-width='9' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3Cpath d='M 62 35 L 78 35 C 85 35, 85 50, 78 50 L 62 50 L 78 75' stroke='%23ffffff' stroke-width='8' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+
+  <style>
+    :root {
+      --bg-color: #000000;
+      --card-bg: #0a0a0c;
+      --accent-color: #007bff;
+      --accent-gradient: linear-gradient(135deg, #007bff 0%, #00d4ff 100%);
+      --green-wa: #25D366;
+      --danger-color: #ff4757;
+      --text-main: #f0f2f5;
+      --text-muted: #8a94a6;
+      --border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 70px; }
+
+    header { 
+      display: flex; align-items: center; justify-content: space-between; 
+      padding: 10px 16px; background: rgba(0, 0, 0, 0.95); 
+      position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border-color); 
+    }
+    
+    .app-brand { display: flex; align-items: center; gap: 10px; }
+    
+    .logo-icon-pro { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+    .logo-text { font-size: 18px; font-weight: 900; color: #fff; }
+    .logo-text span { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .badge-live { background: rgba(0, 123, 255, 0.15); border: 1px solid rgba(0, 123, 255, 0.3); color: var(--accent-color); font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+
+    .page { display: none; padding: 12px; }
+    .page.active { display: block; }
+
+    .card { background: var(--card-bg); padding: 12px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 12px; }
+    .card-title { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
+    
+    input, select { 
+      width: 100%; padding: 10px; margin-bottom: 8px; border-radius: 8px; 
+      border: 1px solid var(--border-color); background: #000; color: #fff; font-size: 13px; outline: none; 
+    }
+
+    .btn { 
+      width: 100%; padding: 10px; border-radius: 8px; border: none; 
+      font-weight: 600; font-size: 13px; cursor: pointer; display: flex; 
+      align-items: center; justify-content: center; gap: 6px; text-decoration: none; 
+    }
+    .btn-primary { background: var(--accent-color); color: white; }
+    .btn-green { background: var(--green-wa); color: white; }
+    .btn-secondary { background: rgba(255, 255, 255, 0.15); color: white; }
+    .btn-danger { background: var(--danger-color); color: white; margin-top: 6px; }
+
+    /* REELS FEED */
+    .reels-container { position: relative; width: 100%; height: 450px; background: #111; border-radius: 14px; overflow: hidden; border: 1px solid var(--border-color); }
+    .reels-media { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .reels-overlay { position: absolute; bottom: 0; left: 0; right: 60px; padding: 12px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); z-index: 2; }
+    .creator-name { font-size: 12px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 4px; margin-bottom: 2px; }
+    .verified-badge { color: var(--accent-color); font-size: 10px; }
+
+    .reels-actions { position: absolute; right: 6px; top: 10px; bottom: 10px; display: flex; flex-direction: column; gap: 6px; z-index: 10; justify-content: center; }
+    .action-btn { 
+      background: rgba(0, 0, 0, 0.75); border: 1px solid rgba(255, 255, 255, 0.2); 
+      color: white; width: 38px; height: 38px; border-radius: 50%; 
+      display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 8px; cursor: pointer; 
+    }
+    .creator-bubble { font-size: 14px; background: var(--accent-gradient); border: 2px solid #fff; }
+
+    /* MODALE COMMENTAIRES */
+    #commentModal {
+      position: fixed; bottom: -100%; left: 0; right: 0; height: 50vh;
+      background: #121216; border-top-left-radius: 16px; border-top-right-radius: 16px;
+      border-top: 1px solid var(--border-color); z-index: 2000; transition: bottom 0.3s ease;
+      display: flex; flex-direction: column; padding: 14px;
+    }
+    #commentModal.open { bottom: 0; }
+    .comment-list { flex-grow: 1; overflow-y: auto; margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .comment-item { background: rgba(255,255,255,0.05); padding: 6px 8px; border-radius: 6px; font-size: 11px; }
+
+    /* CATALOGUE PRODUITS */
+    .product-card { 
+      background: var(--card-bg); border: 1px solid var(--border-color); 
+      border-radius: 10px; padding: 10px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 6px; 
+    }
+    .product-media-container { position: relative; width: 100%; height: 140px; border-radius: 6px; overflow: hidden; background: #111; }
+    .category-badge { position: absolute; top: 6px; left: 6px; background: rgba(0,0,0,0.8); color: #fff; font-size: 8px; padding: 2px 6px; border-radius: 8px; z-index: 2; }
+    .product-media { width: 100%; height: 100%; object-fit: cover; }
+    .product-title { font-size: 13px; font-weight: 700; }
+    .product-price { color: var(--accent-color); font-weight: 700; font-size: 13px; }
+    .product-location { font-size: 10px; color: var(--text-muted); }
+
+    /* PROFIL */
+    .profile-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .profile-avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; background: var(--accent-gradient); border: 2px solid var(--accent-color); }
+    .profile-name { font-size: 15px; font-weight: 700; }
+
+    /* BARRE DE NAVIGATION FIXE */
+    .nav-bar { 
+      position: fixed; bottom: 0; left: 0; right: 0; height: 50px; 
+      background: #000000; border-top: 1px solid var(--border-color); 
+      display: flex; justify-content: space-around; align-items: center; z-index: 1500; 
+    }
+    .nav-item { 
+      display: flex; flex-direction: column; align-items: center; 
+      color: var(--text-muted); font-size: 9px; cursor: pointer; 
+      background: none; border: none; width: 25%; height: 100%; justify-content: center; 
+    }
+    .nav-item.active { color: var(--accent-color); font-weight: 700; }
+    .nav-icon { font-size: 15px; margin-bottom: 1px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="app-brand">
+      <div class="logo-icon-pro">
+        <svg viewBox="0 0 100 100" width="100%" height="100%">
+          <rect width="100" height="100" rx="24" fill="#050508"/>
+          <path d="M 30 75 L 50 25 L 70 75 M 39 55 L 61 55" stroke="#00d4ff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M 62 35 L 78 35 C 85 35, 85 50, 78 50 L 62 50 L 78 75" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <div class="logo-text">Auto<span>Vibe</span></div>
+    </div>
+    <div class="badge-live">PRO ULTRA</div>
+  </header>
+
+  <!-- PAGE 1 : FEED -->
+  <div id="pageFeed" class="page active">
+    <div class="reels-container">
+      <img id="mediaBox" class="reels-media" src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80" alt="Feed">
+      
+      <div class="reels-actions">
+        <button class="action-btn creator-bubble" onclick="alert('Boutique Officielle AutoVibe')">👤</button>
+        <button class="action-btn" onclick="toggleSuivre(this)">➕<span>Suivre</span></button>
+        <button class="action-btn" onclick="ajouterLike()">❤️<span id="likeCount">142</span></button>
+        <button class="action-btn" onclick="alert('Lien copié !')">↗️<span>Partager</span></button>
+        <button class="action-btn" onclick="suivantFeed()">⏭️<span>Suiv.</span></button>
+      </div>
+
+      <div class="reels-overlay">
+        <div class="creator-name">
+          <span id="reelAuthor">@AutoVibe_Officiel</span>
+          <span class="verified-badge">✓</span>
+        </div>
+        <h3 id="reelTitle" style="font-size: 12px; margin-bottom: 6px; font-weight: 600;">Présentation exclusive de la Toyota Fortuner 🚘</h3>
+        <button class="btn btn-secondary" style="padding: 6px; font-size: 11px;" onclick="toggleComments(true)">💬 Commentaires</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALE COMMENTAIRES -->
+  <div id="commentModal">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <div class="card-title" style="margin:0;">💬 Commentaires</div>
+      <button onclick="toggleComments(false)" style="background:none; border:none; color:#fff; font-size:16px; cursor:pointer;">✕</button>
+    </div>
+    <div class="comment-list" id="commentList">
+      <div class="comment-item"><b>@Client_Direct :</b> Véhicule dispo sur Douala ?</div>
+      <div class="comment-item"><b>@Gaïus :</b> Propre la vidéo !</div>
+    </div>
+    <div style="display: flex; gap: 6px;">
+      <input type="text" id="newCommentInput" placeholder="Votre commentaire..." style="margin:0;">
+      <button class="btn btn-primary" style="width: auto; padding: 0 12px;" onclick="ajouterCommentaire()">Envoyer</button>
+    </div>
+  </div>
+
+  <!-- PAGE 2 : ACHETER -->
+  <div id="pageAchat" class="page">
+    <div class="card">
+      <div class="card-title">🔍 Rechercher</div>
+      <select id="filterCategorie">
+        <option value="">Toutes les catégories</option>
+        <option value="Véhicules">Véhicules 🚗</option>
+        <option value="Téléphones">Téléphones 📱</option>
+      </select>
+      <input type="text" id="filterKeyword" placeholder="Nom du véhicule...">
+      <button class="btn btn-primary" onclick="filtrerProduits()">Filtrer</button>
+    </div>
+    <div class="card-title" style="margin-left: 4px;">Annonces disponibles</div>
+    <div id="listeProduits"></div>
+  </div>
+
+  <!-- PAGE 3 : VENDRE -->
+  <div id="pageVendre" class="page">
+    <div class="card">
+      <div class="card-title">➕ Publier une annonce</div>
+      <select id="addCategorie">
+        <option value="Véhicules">Véhicules 🚗</option>
+        <option value="Téléphones">Téléphones 📱</option>
+      </select>
+      <input type="text" id="addNom" placeholder="Nom (ex: Toyota Fortuner 2021)">
+      <input type="number" id="addPrix" placeholder="Prix en FCFA">
+      <input type="text" id="addVille" placeholder="Ville (ex: Douala)">
+      <input type="tel" id="addTel" placeholder="WhatsApp (ex: 2376XXXXXXXX)">
+      <button class="btn btn-primary" onclick="publierProduit()">Valider et Publier</button>
+    </div>
+  </div>
+
+  <!-- PAGE 4 : PROFIL -->
+  <div id="pageProfil" class="page">
+    <div class="card">
+      <div class="profile-header">
+        <div class="profile-avatar">👤</div>
+        <div>
+          <div id="displayName" class="profile-name">Mon Profil</div>
+          <div style="font-size: 10px; color: var(--green-wa); font-weight: 600;">✓ Compte Vendeur</div>
+        </div>
+      </div>
+      <input type="text" id="profileNom" placeholder="Nom de votre boutique">
+      <input type="tel" id="profileTel" placeholder="Votre WhatsApp principal">
+      <button class="btn btn-primary" onclick="sauvegarderProfil()">💾 Mettre à jour et Sauvegarder</button>
+    </div>
+    <div class="card-title" style="margin-left: 4px;">📦 Mes annonces</div>
+    <div id="mesProduits"></div>
+  </div>
+
+  <!-- BARRE DE NAVIGATION -->
+  <nav class="nav-bar">
+    <button class="nav-item active" onclick="naviguer('pageFeed', this)">
+      <span class="nav-icon">🎬</span>Feed
+    </button>
+    <button class="nav-item" onclick="naviguer('pageAchat', this)">
+      <span class="nav-icon">🛍️</span>Acheter
+    </button>
+    <button class="nav-item" onclick="naviguer('pageVendre', this)">
+      <span class="nav-icon">➕</span>Vendre
+    </button>
+    <button class="nav-item" onclick="naviguer('pageProfil', this)">
+      <span class="nav-icon">👤</span>Profil
+    </button>
+  </nav>
+
+  <script>
+    const videosFeed = [
+      { id: 101, titre: "Présentation exclusive de la Toyota Fortuner 🚘", auteur: "@AutoVibe_Officiel", image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80", likes: 142 },
+      { id: 102, titre: "Mercedes-AMG G 63 - Puissance et Prestige 🏎️", auteur: "@GaïusAuto", image: "https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&w=800&q=80", likes: 230 }
+    ];
+
+    let catalogue = JSON.parse(localStorage.getItem('autovibe_products')) || [
+      { id: 1, cat: "Véhicules", nom: "Toyota Fortuner 2021 (Dédouanée)", prix: 28000000, ville: "Douala", tel: "237600000000", image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80", ownerId: "system" }
+    ];
+
+    let profil = JSON.parse(localStorage.getItem('autovibe_profile')) || { id: "user_my_id", nom: "Boutique Pro", tel: "237600000000" };
+    let indexFeed = 0;
+
+    function naviguer(idPage, el) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+      document.getElementById(idPage).classList.add('active');
+      el.classList.add('active');
+      if (idPage === 'pageProfil') afficherMesProduits();
+      if (idPage === 'pageAchat') afficherCatalogue(catalogue);
+    }
+
+    function suivantFeed() {
+      indexFeed = (indexFeed + 1) % videosFeed.length;
+      const item = videosFeed[indexFeed];
+      document.getElementById('mediaBox').src = item.image;
+      document.getElementById('reelTitle').innerText = item.titre;
+      document.getElementById('reelAuthor').innerText = item.auteur;
+      document.getElementById('likeCount').innerText = item.likes;
+    }
+
+    function ajouterLike() {
+      videosFeed[indexFeed].likes++;
+      document.getElementById('likeCount').innerText = videosFeed[indexFeed].likes;
+    }
+
+    function toggleSuivre(btn) {
+      btn.classList.toggle('active');
+      btn.querySelector('span').innerText = btn.classList.contains('active') ? 'Suivi' : 'Suivre';
+    }
+
+    function toggleComments(open) {
+      const modal = document.getElementById('commentModal');
+      if(open) modal.classList.add('open');
+      else modal.classList.remove('open');
+    }
+
+    function ajouterCommentaire() {
+      const input = document.getElementById('newCommentInput');
+      if(!input.value.trim()) return;
+      const list = document.getElementById('commentList');
+      list.innerHTML += `<div class="comment-item"><b>@Moi :</b> ${input.value}</div>`;
+      input.value = "";
+      list.scrollTop = list.scrollHeight;
+    }
+
+    function afficherCatalogue(items) {
+      const container = document.getElementById('listeProduits');
+      container.innerHTML = "";
+      items.forEach(p => {
+        container.innerHTML += `
+          <div class="product-card">
+            <div class="product-media-container">
+              <span class="category-badge">${p.cat}</span>
+              <img src="${p.image}" class="product-media" alt="${p.nom}">
+            </div>
+            <div class="product-title">${p.nom}</div>
+            <div class="product-price">${Number(p.prix).toLocaleString()} FCFA</div>
+            <div class="product-location">📍 ${p.ville}</div>
+            <a href="https://wa.me/${p.tel}?text=Bonjour,%20intéressé%20par%20${encodeURIComponent(p.nom)}" target="_blank" class="btn btn-green">💬 WhatsApp</a>
+          </div><button onclick="partagerSurWhatsApp('${p.nom}', '${p.prix}', '${p.ville}')" style="background-color: #25D366; color: white; padding: 6px 12px; border: none; border-radius: 6px; font-weight: bold; margin-top: 8px; cursor: pointer;">Partager sur WhatsApp</button>
+        `;
+      });
+    }
+
+    function filtrerProduits() {
+      const cat = document.getElementById('filterCategorie').value;
+      const kw = document.getElementById('filterKeyword').value.toLowerCase();
+      const res = catalogue.filter(p => (!cat || p.cat === cat) && (!kw || p.nom.toLowerCase().includes(kw)));
+      afficherCatalogue(res);
+    }
+
+    function afficherMesProduits() {
+      const container = document.getElementById('mesProduits');
+      container.innerHTML = "";
+      const mesItems = catalogue.filter(p => p.ownerId === profil.id);
+      if (mesItems.length === 0) {
+        container.innerHTML = `<p style="color: var(--text-muted); font-size: 11px;">Aucune annonce.</p>`;
+        return;
+      }
+      mesItems.forEach(p => {
+        container.innerHTML += `
+          <div class="product-card">
+            <div class="product-media-container"><img src="${p.image}" class="product-media"></div>
+            <div class="product-title">${p.nom}</div>
+            <div class="product-price">${Number(p.prix).toLocaleString()} FCFA</div>
+            <button class="btn btn-danger" onclick="supprimerProduit(${p.id})">🗑️ Supprimer</button>
+          </div>
+        `;
+      });
+    }
+
+    function supprimerProduit(id) {
+      if (confirm("Supprimer ?")) {
+        catalogue = catalogue.filter(p => p.id !== id);
+        localStorage.setItem('autovibe_products', JSON.stringify(catalogue));
+        afficherCatalogue(catalogue);
+        afficherMesProduits();
+      }
+    }
+
+    function sauvegarderProfil() {
+      profil.nom = document.getElementById('profileNom').value || "Boutique Pro";
+      profil.tel = document.getElementById('profileTel').value || "237600000000";
+      localStorage.setItem('autovibe_profile', JSON.stringify(profil));
+      document.getElementById('displayName').innerText = profil.nom;
+      alert("Profil sauvegardé avec succès !");
+    }
+
+    function publierProduit() {
+      const cat = document.getElementById('addCategorie').value;
+      const nom = document.getElementById('addNom').value;
+      const prix = parseFloat(document.getElementById('addPrix').value);
+      const ville = document.getElementById('addVille').value;
+      const tel = document.getElementById('addTel').value || profil.tel;
+
+      if (!nom || isNaN(prix) || !ville) {
+        alert("Remplis le nom, le prix et la ville.");
+        return;
+      }
+
+      const imgUrl = cat === 'Téléphones' ? "https://images.unsplash.com/photo-1695048133142-1a20484d2569?auto=format&fit=crop&w=800&q=80" : "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80";
+
+      const nouveauProduit = { id: Date.now(), cat, nom, prix, ville, tel, image: imgUrl, ownerId: profil.id };
+      catalogue.unshift(nouveauProduit);
+      localStorage.setItem('autovibe_products', JSON.stringify(catalogue));
+
+      alert("Annonce publiée !");
+      naviguer('pageAchat', document.querySelectorAll('.nav-item')[1]);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      afficherCatalogue(catalogue);
+      if(profil.nom) {
+        document.getElementById('profileNom').value = profil.nom;
+        document.getElementById('profileTel').value = profil.tel;
+        document.getElementById('displayName').innerText = profil.nom;
+      }
+    });function partagerSurWhatsApp(titre, prix, ville) {
+    const texte = `Découvre cette annonce sur AutoVibe : ${titre} à ${ville} au prix de ${prix} FCFA !`;
+    const urlWhatsApp = `https://wa.me/?text=${encodeURIComponent(texte)}`;
+    window.open(urlWhatsApp, '_blank');
+}
+  </script>
+
+
