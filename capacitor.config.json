@@ -3,7 +3,7 @@
   "appName": "AutoVibe",
   "webDir": "www",
   "server": {
-    "url": "https://mbami-683.github.io/autovibe-app/",
+    "url": "https://mbami-683.github.io/autovibe-app/www/index.html",
     "cleartext": true
   }
 }
