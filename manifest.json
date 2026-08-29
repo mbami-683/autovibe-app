@@ -1,13 +1,13 @@
 {
-  "background_color": "#0f172a",
-  "dir": "ltr",
-  "display": "standalone",
-  "name": "AutoVibe",
-  "orientation": "any",
-  "scope": "/",
-  "short_name": "AutoVibe",
-  "start_url": "/",
-  "theme_color": #3b82f6.
-  "id": "/autovibe-app/",
-  "description": "Plateforme d'importation et de découverte de véhicules"
+  "background_color": "#647282",[cite: 1]
+  "dir": "ltr",[cite: 1]
+  "display": "standalone",[cite: 1]
+  "name": "mbami-683.github",[cite: 1]
+  "orientation": "any",[cite: 1]
+  "scope": "/",[cite: 1]
+  "short_name": "mbami-683.github",[cite: 1]
+  "start_url": "/",[cite: 1]
+  "theme_color": "#848484",[cite: 1]
+  "id": "/",[cite: 1]
+  "description": "Plateforme d'importation et de découverte de véhicules"[cite: 1]
 }
