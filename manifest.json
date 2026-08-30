@@ -4,9 +4,9 @@
   "display": "standalone",
   "name": "AutoVibe",
   "orientation": "any",
-  "scope": "/autovibe-app/",
+  "scope": "/",
   "short_name": "AutoVibe",
-  "start_url": "/autovibe-app/",
+  "start_url": "/",
   "theme_color": "hsl(221, 83%, 53%)",
   "id": "/autovibe-app/",
   "description": "Plateforme d'importation et de découverte de véhicules"
