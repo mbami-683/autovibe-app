@@ -1,5 +1,9 @@
 {
   "appId": "com.autovibe.app",
   "appName": "AutoVibe",
-  "webDir": "www"
+  "webDir": "www",
+  "server": {
+    "url": "https://mbami-683.github.io/autovibe-app/",
+    "cleartext": true
+  }
 }

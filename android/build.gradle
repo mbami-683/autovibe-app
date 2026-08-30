@@ -18,6 +18,9 @@ buildscript {
 apply from: "variables.gradle"
 
 allprojects {
+    configurations.all {
+        resolutionStrategy.force "org.jetbrains.kotlin:kotlin-stdlib:1.8.22", "org.jetbrains.kotlin:kotlin-stdlib-common:1.8.22", "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22", "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22"
+    }
     repositories {
         google()
         mavenCentral()
