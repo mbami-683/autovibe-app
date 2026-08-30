@@ -9,5 +9,13 @@
   "start_url": "/autovibe-app/",
   "theme_color": "hsl(221, 83%, 53%)",
   "id": "/autovibe-app/",
-  "description": "Plateforme d'importation et de découverte de véhicules"
+  "description": "Plateforme d'importation et de découverte de véhicules",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/512",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }
